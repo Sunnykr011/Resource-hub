@@ -12,7 +12,7 @@ NC='\033[0m'
 # Configuration
 NIGHTVAULT_VERSION="1.0.0"
 NIGHTVAULT_HOME="${HOME}/.nightvault"
-REMOTE_PATH="remote:nightvault"
+REMOTE_PATH="nightvault:nightvault"
 
 # Security settings
 ENCRYPT_BACKUPS=true
@@ -38,14 +38,16 @@ check_dependencies() {
     done
 }
 
+# Verify integrity placeholder
+verify_integrity() {
+    echo -e "${GREEN}Skipping integrity check (not implemented yet).${NC}"
+}
+
 # Mount or sync cloud vault
 sync_vault() {
     echo -e "${BLUE}Syncing NightVault from cloud...${NC}"
     rclone sync --progress --checksum "$REMOTE_PATH" "$NIGHTVAULT_HOME"
-    verify_integrity() {
-    echo -e "${GREEN}Skipping integrity check (not implemented yet).${NC}"
-}
-
+    verify_integrity || exit 1
 }
 
 # Create directory structure
